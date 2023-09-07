@@ -1,1 +1,1 @@
-This repository contains 2 subfiles of Homeworks and Labs.
+This repository contains 2 subfiles of Homeworks and Labs. Within the homework and lab folders, there are other folders that lists the specific homework and lab numbers.
