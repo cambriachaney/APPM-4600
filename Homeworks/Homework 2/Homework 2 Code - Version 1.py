@@ -36,7 +36,7 @@ SyntaxError: incomplete input
 ...     term3 = x**3 * (1/6)
 ...     term4 = x**4 * (1/24)
 ...     return term1 + term2 + term3
-
+... 
 taylor(x1)
 1e-09
 def taylor(x):
@@ -210,3 +210,29 @@ for i in range(10):
 [<matplotlib.lines.Line2D object at 0x0000025A542BCE90>]
 [<matplotlib.lines.Line2D object at 0x0000025A542CC610>]
 plt.show()
+
+= RESTART: C:\Users\cambr\Downloads\bisection_example.py
+the approximate root is 0.9999999701976776
+the error message reads: 0
+f(astar) = -2.98023206113385e-08
+a = [[1,1],[1+10**(-10), 1-10**(-10)]]
+cond(A)
+Traceback (most recent call last):
+  File "<pyshell#95>", line 1, in <module>
+    cond(A)
+NameError: name 'cond' is not defined. Did you mean: 'round'?
+cond(a)
+Traceback (most recent call last):
+  File "<pyshell#96>", line 1, in <module>
+    cond(a)
+NameError: name 'cond' is not defined. Did you mean: 'round'?
+np.cond(a)
+Traceback (most recent call last):
+  File "<pyshell#97>", line 1, in <module>
+    np.cond(a)
+  File "C:\Users\cambr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\__init__.py", line 328, in __getattr__
+    raise AttributeError("module {!r} has no attribute "
+AttributeError: module 'numpy' has no attribute 'cond'. Did you mean: 'conj'?
+np.linalg.cond(a)
+                         
+19999973849.225224
