@@ -13,12 +13,14 @@ def driver():
 #    a = 0.1
 #    b = np.pi+0.1
 
-    tol = 1e-5
+    tol = 1e-10
+    Nmax = 100
 
-    [astar,ier] = bisection(f,a,b,tol)
-    print('the approximate root is',astar)
+    [points, pstar, ier, count] = bisection_newton(f,fp,a,b,tol,Nmax)
+    print('the approximate root is',pstar)
     print('the error message reads:',ier)
-    print('f(astar) =', f(astar))
+    print('f(astar) =', f(pstar))
+    print('The number of iterations is: ', count)
 
 
 
@@ -65,7 +67,7 @@ def bisection_newton(f,fp,a,b,tol,Nmax):
         return newton(f, fp, d, tol, Nmax)
 
     else:
-        points = np.zeros(Nmax + 1)]
+        points = np.zeros(Nmax + 1)
         count = 0
         while (abs(d-a)> tol):
           fd = f(d)
@@ -75,7 +77,7 @@ def bisection_newton(f,fp,a,b,tol,Nmax):
           if (fd ==0):
             astar = d
             ier = 0
-            return [astar, ier]
+            return [points, astar, ier, count]
           if (fa*fd<0):
              b = d
           else: 

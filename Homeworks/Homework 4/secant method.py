@@ -18,6 +18,9 @@ def driver():
     print('the error message reads:', '%d' % ier)
     print('Number of iterations:', '%d' % count)
 
+    [alpha, constant] = orderconvergence(pstar, p)
+    print("The order of convergence is: ", alpha)
+
     mydata = []
     for i in range(count):
         mydata.append([i, p[i] - pstar])
@@ -33,12 +36,17 @@ def driver():
     y1 = []
     
     for i in range(len(mydata)-1):
-        yn.append(mydata[i][1])
+        yn.append(abs(mydata[i][1]))
 
     for i in range(len(mydata)-1):
-        y1.append(mydata[(i+1)][1])
+        y1.append(abs(mydata[(i+1)][1]))
+
+    slope = (np.log(y1[6]) - np.log(y1[4]))/(np.log(yn[6]) - np.log(yn[4]))
+    print("The slope of the log log graph is: ", slope)
     
-    plt.loglog(y1, yn)
+    plt.plot(y1, yn)
+    plt.xscale('log')
+    plt.yscale('log')
     plt.show()
     
   
@@ -74,21 +82,33 @@ def secant(p0,p1,f,tol, Nmax):
         p[i] = p2
 
         if abs(p2 - p1) < tol:
-            pstar = p2
+            pstar = p1
             ier = 0
             return [p, pstar, ier, count]
 
         p0 = p1
         fp0 = fp1
         p1 = p2
-        fp2 = f(p2)
+        fp1 = f(p2)
 
 
 
     pstar = p2
     ier = 1
     return [p, pstar, ier, count]
-    
+
+def orderconvergence(point, vector):
+     N = len(vector)
+     num = abs(vector[(N-1)] - point)
+     denom = abs(vector[(N-2)] - point)
+     if (isinstance(num/denom, float)) and (num/denom < 1):
+        alpha = 1
+        constant = num/denom
+        return [alpha, constant]
+     alpha = 2
+     while num/(denom**alpha) == float("INF"):
+         alpha = alpha + 1
+     return [alpha, num/(denom**alpha)]
 
 
 driver()

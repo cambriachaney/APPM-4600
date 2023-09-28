@@ -2,44 +2,27 @@
 import numpy as np
 from tabulate import tabulate
 import matplotlib.pyplot as plt
+import scipy
         
 def driver():
 #f = lambda x: (x-2)**3
 #fp = lambda x: 3*(x-2)**2
 #p0 = 1.2
 
-  f = lambda x: x**6 - x - 1
-  fp = lambda x: 6*x**5 - 1
-  p0 = 2
+  f = lambda x: scipy.integrate.quad(lambda x: np.e**(-x**2), 0, x/1.6916)[0]*(2/np.sqrt(np.pi))*35 - 15
+  fp = lambda x: (35*2/1.6916)*(np.sqrt(np.pi))*np.e**((x/1.6916)**2)
+  
+  p0 = 1
 
-  Nmax = 100
-  tol = 1.e-14
+  Nmax = 1000
+  tol = 1.e-13
 
   (p,pstar,info,it, count) = newton(f,fp,p0,tol, Nmax)
   print('the approximate root is', '%16.16e' % pstar)
   print('the error message reads:', '%d' % info)
   print('Number of iterations:', '%d' % it)
-
-  mydata = []
-  for i in range(count):
-    mydata.append([i, p[i] - pstar])
-
-  headers = ["Iteration", "Error"]
-
-  print(tabulate(mydata, headers = headers, tablefmt = "fancy_grid"))
-
-  yn = []
-
-  y1 = []
-    
-  for i in range(len(mydata)-1):
-    yn.append(mydata[i][1])
-
-  for i in range(len(mydata)-1):
-      y1.append(mydata[(i+1)][1])
-    
-  plt.loglog(y1, yn)
-  plt.show()
+  [alpha, constant] = orderconvergence(pstar, p)
+  print("The order of convergence is: ", alpha)
 
 def newton(f,fp,p0,tol,Nmax):
   """
@@ -62,7 +45,7 @@ def newton(f,fp,p0,tol,Nmax):
   p[0] = p0
   count = 0
   for it in range(Nmax):
-      p1 = p0-f(p0)/fp(p0)
+      p1 = p0 - f(p0)/fp(p0)
       p[it+1] = p1
       count = count + 1
       if (abs(p1-p0) < tol):
@@ -73,5 +56,18 @@ def newton(f,fp,p0,tol,Nmax):
   pstar = p1
   info = 1
   return [p,pstar,info,it, count]
-        
+
+def orderconvergence(point, vector):
+     N = len(vector)
+     num = abs(vector[(N-1)] - point)
+     denom = abs(vector[(N-2)] - point)
+     if (isinstance(num/denom, float)) and (num/denom < 1):
+        alpha = 1
+        constant = num/denom
+        return [alpha, constant]
+     alpha = 2
+     while num/(denom**alpha) == float("INF"):
+         alpha = alpha + 1
+     return [alpha, num/(denom**alpha)]
+    
 driver()
