@@ -1,6 +1,6 @@
 Python 3.11.5 (tags/v3.11.5:cce6ba9, Aug 24 2023, 14:38:34) [MSC v.1936 64 bit (AMD64)] on win32
 Type "help", "copyright", "credits" or "license()" for more information.
-
+>>> 
 ===== RESTART: C:\Users\cambr\.ssh\APPM-4600\Labs\Lab 4\fixedpt_example.py =====
 
 
@@ -10,7 +10,7 @@ Warning (from warnings module):
 RuntimeWarning: invalid value encountered in divide
 the number of iterations is: 98
 Vector of Accelerated Iterations: [array([1.36523058]), array([1.36523002]), array([1.36523001]), array([1.36523001]), array([1.36523001]), array([1.36523001]), array([1.36523001]), array([1.36523001]), array([1.36523001]), array([1.36523001]), array([1.36523001]), array([0.]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan]), array([nan])]
-
+>>> 
 ===== RESTART: C:\Users\cambr\.ssh\APPM-4600\Labs\Lab 4\fixedpt_example.py =====
 the approximate fixed point is: 1.3652300134164816
 f1(xstar): 1.3652300134137934
@@ -35,7 +35,7 @@ The order of convergence is:  1
 The error constant is:  0.1271839945037372
 the number of iterations is: 10
 Vector of Accelerated Iterations: [1.3652305845417765, 1.3652300226567435, 1.3652300135637154, 1.3652300134165187, 1.365230013414136, 1.3652300134140976, 1.3652300134140969, 1.3652300134140969, 1.3652300134140969, 1.3652300134140969]
->>> 
+
 ========================================== RESTART: C:\Users\cambr\.ssh\APPM-4600\Labs\Lab 4\fixedpt_example.py =========================================
 the approximate fixed point is: 1.3652300134164816
 f1(xstar): 1.3652300134137934
@@ -46,7 +46,7 @@ The order of convergence is:  1
 The error constant is:  0.1271839945037372
 Vector of Accelerated Iterations: [1.3652305845417765, 1.3652300226567435, 1.3652300135637154, 1.3652300134165187, 1.365230013414136, 1.3652300134140976, 1.3652300134140969, 1.3652300134140969, 1.3652300134140969, 1.3652300134140969]
 the number of iterations is: 10
->>> 
+
 ========================================== RESTART: C:\Users\cambr\.ssh\APPM-4600\Labs\Lab 4\fixedpt_example.py =========================================
 the approximate fixed point is: 1.3652300134164816
 f1(xstar): 1.3652300134137934
@@ -58,7 +58,7 @@ The order of convergence is:  1
 The error constant is:  0.1271839945037372
 Vector of Accelerated Iterations: [1.3652305845417765, 1.3652300226567435, 1.3652300135637154, 1.3652300134165187, 1.365230013414136, 1.3652300134140976, 1.3652300134140969, 1.3652300134140969, 1.3652300134140969, 1.3652300134140969]
 the number of iterations is: 10
->>> 
+
 ========================================== RESTART: C:\Users\cambr\.ssh\APPM-4600\Labs\Lab 4\fixedpt_example.py =========================================
 the approximate fixed point is: 1.3652300134164816
 f1(xstar): 1.3652300134137934
