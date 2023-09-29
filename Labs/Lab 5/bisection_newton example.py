@@ -4,16 +4,16 @@ import numpy as np
 def driver():
 
 # use routines    
-    f = lambda x: np.sin(x)
-    fp = lambda x: np.cos(x)
-    a = 0.5
-    b = 3*np.pi*0.25
+    f = lambda x: x
+    fp = lambda x: 1
+    a = -1
+    b = 3.5
 
 #    f = lambda x: np.sin(x)
 #    a = 0.1
 #    b = np.pi+0.1
 
-    tol = 1e-10
+    tol = 1e-5
     Nmax = 100
 
     [points, pstar, ier, count] = bisection_newton(f,fp,a,b,tol,Nmax)
@@ -21,7 +21,7 @@ def driver():
     print('the error message reads:',ier)
     print('f(astar) =', f(pstar))
     print('The number of iterations is: ', count)
-
+    print("Iterations: ", points)
 
 
 
@@ -45,39 +45,41 @@ def bisection_newton(f,fp,a,b,tol,Nmax):
     if (fa*fb>0):
        ier = 1
        astar = a
-       return [astar, ier]
+       return [np.zeros(1), astar, ier, 0]
 
 #   verify end points are not a root 
     if (fa == 0):
       astar = a
       ier =0
-      return [astar, ier]
+      return [np.zeros(1), astar, ier, 0]
 
     if (fb ==0):
       astar = b
       ier = 0
-      return [astar, ier]
+      return [np.zeros(1), astar, ier, 0]
 
+    ppt = np.zeros(Nmax + 1)
     count = 0
     d = 0.5*(a+b)
 
     condition = d - f(d)/fp(d)
 
     if condition > a and condition < b:
-        return newton(f, fp, d, tol, Nmax)
+        [points,pstar,info, count] = newton(f, fp, d, tol, Nmax)
+        iterations = [ppt, points]
+        return [iterations, pstar, info, count]
 
     else:
-        points = np.zeros(Nmax + 1)
         count = 0
         while (abs(d-a)> tol):
           fd = f(d)
           count = count + 1
-          points[count] = d
+          ppt[count] = d
           
           if (fd ==0):
             astar = d
             ier = 0
-            return [points, astar, ier, count]
+            return [ppt, astar, ier, count]
           if (fa*fd<0):
              b = d
           else: 
@@ -89,7 +91,7 @@ def bisection_newton(f,fp,a,b,tol,Nmax):
       
         astar = d
         ier = 0
-        return [points, astar, ier, count]
+        return [ppt, astar, ier, count]
 
 def newton(f,fp,p0,tol,Nmax):
   """
@@ -113,7 +115,7 @@ def newton(f,fp,p0,tol,Nmax):
   count = 0
   for it in range(Nmax):
       p1 = f(p0)/fp(p0)
-      p[it+1] = p1
+      points[it+1] = p1
       count = count + 1
       if (abs(p1-p0) < tol):
           pstar = p1
