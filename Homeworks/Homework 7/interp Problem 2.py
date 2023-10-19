@@ -8,7 +8,7 @@ def driver():
 
     f = lambda x: 1/(1+(10*x)**2)
 
-    N = 10
+    N = 22
     ''' interval'''
     a = -1
     b = 1
@@ -53,7 +53,7 @@ def driver():
     for kk in range(Neval+1):
        yeval_l[kk] = eval_lagrange(xeval[kk],xint,yint,N)
        yeval_dd[kk] = evalDDpoly(xeval[kk],xint,y,N)
-       yeval_b[kk] = bary_lagrange(xeval[kk],xint,yint,N)
+       yeval_b[kk] = barycentric_lagrange(xeval[kk],xint,yint,N)
           
 
 
@@ -63,7 +63,7 @@ def driver():
     'Approximation Plot'
     plt.figure()    
     plt.plot(xeval,fex,'ro-', label = 'Actual Plot')
-    plt.plot(xeval,yeval_l,'bs--', label = 'Lagrange')
+    #plt.plot(xeval,yeval_l,'bs--', label = 'Lagrange')
     plt.plot(xeval,yeval_b, 'c.--', label = "Barycentric")
     #plt.plot(xeval,yeval_dd,'c.--', label = 'Newton DD')
     plt.legend()
@@ -73,34 +73,39 @@ def driver():
     err_l = abs(yeval_l-fex)
     err_dd = abs(yeval_dd-fex)
     err_b = abs(yeval_b - fex)
-    plt.semilogy(xeval,err_l,'ro--',label='lagrange')
+    #plt.semilogy(xeval,err_l,'ro--',label='lagrange')
     plt.semilogy(xeval, err_b, 'bs--', label = 'Barycentric')
     #plt.semilogy(xeval,err_dd,'bs--',label='Newton DD')
     plt.legend()
     plt.show()
 
-
+# Try Number 1 for Barycentric Code
 def bary_lagrange(xeval,xint,yint,N):
 
-    lj = 1
-    
-    for count in range(N+1):
-        lj = lj*(xeval - xint[count])
-
-    wj = np.ones(N+1)
+    lj = np.ones(N+1)
+    w = np.ones(N+1)
     
     for count in range(N+1):
        for jj in range(N+1):
            if (jj != count):
-                wj[count] = wj[count]*(xint[count] - xint[jj])
+              lj[count] = lj[count]*(xeval - xint[jj])/(xint[count]-xint[jj])
+              w[count] *= (xint[count] - xint[jj])
 
+    w = 1/w
     yeval = 0.
+    num = 0
+    denom = 0
     
     for jj in range(N+1):
-       yeval = yeval + yint[jj]*(1/wj[jj])*(1/(xeval - xint[jj]))
-  
-    return(lj * yeval)
+        if xeval != xint[jj]:
+           num += w[jj]*yint[jj] / (xeval - xint[jj])
+           denom += w[jj]/(xeval - xint[jj])
 
+    yeval = num/denom
+  
+    return(yeval)
+
+#Try Number 2 for Barycentric Code - THE CORRECT ONE
 def barycentric_lagrange(xeval,xint,yint,N):
 
     lj = 1
@@ -118,9 +123,10 @@ def barycentric_lagrange(xeval,xint,yint,N):
     yeval = 0.
     
     for jj in range(N+1):
-       yeval = yeval + yint[jj]*(1/wj[jj])*(1/(xeval - xint[jj]))
+        #if xeval != xint[jj]:
+           yeval = yeval + lj*yint[jj]*(1/wj[jj])*(1/(xeval - xint[jj]))
   
-    return(lj * yeval)
+    return(yeval)
 
 def eval_lagrange(xeval,xint,yint,N):
 

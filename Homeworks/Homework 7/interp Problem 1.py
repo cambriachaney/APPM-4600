@@ -8,7 +8,7 @@ def driver():
 
     f = lambda x: 1/(1+(10*x)**2)
 
-    N = 4
+    N = 22
     ''' interval'''
     a = -1
     b = 1
@@ -35,8 +35,8 @@ def driver():
     print("The Vandermonde Matrix is:", vander_inv)
     print("The coefficients are:", a_vec)
     plt.plot(xeval, yeval_mono, label = "Actual Plot")
-    plt.plot(xeval, polynomial_eval, label = "Approximation of Monomial")
-    plt.plot(xeval, abs(yeval_mono - polynomial_eval), label = "Error of Monomial")
+    plt.plot(xeval, polynomial_eval, 'ro--',label = "Approximation of Monomial")
+    plt.plot(xeval, abs(yeval_mono - polynomial_eval),'bs--', label = "Error of Monomial")
     plt.legend()
     plt.show()
     
