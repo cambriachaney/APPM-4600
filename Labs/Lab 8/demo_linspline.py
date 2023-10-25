@@ -15,7 +15,7 @@ def driver():
     xeval =  np.linspace(a,b,Neval)
     
     ''' number of intervals'''
-    Nint = 2
+    Nint = 3
     
     '''evaluate the linear spline'''
     yeval = eval_lin_spline(xeval,Neval,a,b,f,Nint)
@@ -38,16 +38,16 @@ def driver():
    # plt.show()
 
     ''' evaluate the cubic spline '''
-    [Si, x_eval] = cubic_spliness(xeval, a, b, f, Nint)
+    [Si, x_eval] = cubic_sp(xeval, a, b, f, Nint)
     
     fex1 = np.zeros(Neval)
     for j in range(Neval):
         fex1[j] = f(xeval[j])
 
     plt.figure()
-    plt.plot(xeval, fex1, 'ro-')
+    plt.plot(xeval, fex1)
     for i in range(len(Si)):
-        plt.plot(x_eval[i], Si[i], 'bs-')
+        plt.plot(x_eval[i], Si[i])
     plt.show()
     
     
@@ -255,7 +255,7 @@ def cubic_spliness(xeval, a, b, f, Nint):
         second = (coef[i+1]*(x_eval[i] - xint[i])**3)/(6*h)
         C = f(xint[i])/h - ((h/6)*coef[i])
         D = f(xint[i+1])/h - ((h*coef[i+1])/6)
-        third = C*(xint[i+1] - 1)
+        third = C*(xint[i+1] - x_eval[i])
         fourth = D*(x_eval[i] - xint[i])
 
         Si_matrix.append(first + second + third + fourth)
@@ -265,7 +265,67 @@ def cubic_spliness(xeval, a, b, f, Nint):
     print(Si_matrix)
 
     return [Si_matrix, x_eval]
+
+def cubic_sp(xeval, a, b, f, Nint):
+
+    xint = np.linspace(a,b,Nint+1)
+    print("xint:", len(xint))
+    
+    h = (b-a)/Nint
+    print("h: ", h)
+
+    c = np.full(shape = Nint - 1, fill_value = 1/3)
+    matrix = np.diag(c)
+
+    for i in range(Nint - 2):
+        for j in range(Nint - 2):
+            if abs(i - j) == 1:
+                matrix[i][j] = 1/12
+
+    print(matrix)
+
+    yvec = np.zeros(Nint - 1)
+
+    for i in range(Nint - 2):
+        yvec[i] = (f(xint[i+2]) - 2*f(xint[i+1]) + f(xint[i]))/(2*h**2)
+
+    print("yvec: ", len(yvec))
+    
+    matrix_inv = inv(matrix)
+
+    coef = matrix_inv.dot(yvec)
+    coef = np.append(0, coef)
+    coef = np.append(coef, 0)
+
+    print("Coef:", len(coef))
+    
+    Si_matrix = []
+    x_eval = []
+
+
+    for i in range(Nint):
+        ind = np.where((xint[i] <= xeval) & (xint[i+1] >= xeval))
+        x_eval.append(xeval[ind[0]])
+
+    print("Xeval:", len(x_eval))
+    print("xeval[0]: ", len(x_eval[0]))
+
+    for i in range(Nint):
         
+        first = (coef[i]*(xint[i+1] - x_eval[i])**3)/(6*h)
+        second = (coef[i+1]*(x_eval[i] - xint[i])**3)/(6*h)
+        C = f(xint[i])/h - ((h/6)*coef[i])
+        D = f(xint[i+1])/h - ((h*coef[i+1])/6)
+        third = C*(xint[i+1] - x_eval[i])
+        fourth = D*(x_eval[i] - xint[i])
+
+        Si_matrix.append(first + second + third + fourth)
+
+    print("Si: ", len(Si_matrix))
+    print("Si[0]: ", len(Si_matrix[0]))
+    print(Si_matrix)
+
+    return [Si_matrix, x_eval]
     
     
 
