@@ -17,7 +17,7 @@ def driver():
     ''' create equispaced interpolation nodes'''
     xint = np.linspace(a,b,N+1)
     
-    xint = np.array([np.cos((2*i -1)*np.pi / (2*N)) for i in range(1,N+1)])
+   # xint = np.array([np.cos((2*i -1)*np.pi / (2*N)) for i in range(1,N+1)])
     
     ''' create interpolation data'''
     yint = f(xint)
@@ -41,38 +41,39 @@ def driver():
     
     '''Initialize and populate the first columns of the 
      divided difference matrix. We will pass the x vector'''
-    #y = np.zeros( (N+1, N+1) )
+    y = np.zeros( (N+1, N+1) )
      
-    #for j in range(N+1):
-     #  y[j][0]  = yint[j]
+    for j in range(N+1):
+       y[j][0]  = yint[j]
 
-    #y = dividedDiffTable(xint, y, N+1)
+    y = dividedDiffTable(xint, y, N+1)
+    print('Y Table', y)
     ''' evaluate lagrange poly '''
-    #for kk in range(Neval+1):
-     #  yeval_l[kk] = eval_lagrange(xeval[kk],xint,yint,N)
-      # yeval_dd[kk] = evalDDpoly(xeval[kk],xint,y,N)
+    for kk in range(Neval+1):
+       yeval_l[kk] = eval_lagrange(xeval[kk],xint,yint,N)
+       yeval_dd[kk] = evalDDpoly(xeval[kk],xint,y,N)
           
 
 
 
     ''' create vector with exact values'''
-   # fex = f(xeval)
+    fex = f(xeval)
        
     'Approximation Plot'
-  #  plt.figure()    
-   # plt.plot(xeval,fex,'ro-', label = 'Actual Plot')
-    #plt.plot(xeval,yeval_l,'bs--', label = 'Lagrange') 
-    #plt.plot(xeval,yeval_dd,'c.--', label = 'Newton DD')
-    #plt.legend()
+    plt.figure()    
+    plt.plot(xeval,fex,'ro-', label = 'Actual Plot')
+    plt.plot(xeval,yeval_l,'bs--', label = 'Lagrange') 
+    plt.plot(xeval,yeval_dd,'c.--', label = 'Newton DD')
+    plt.legend()
 
     'Error Plot'
-    #plt.figure() 
-    #err_l = abs(yeval_l-fex)
-    #err_dd = abs(yeval_dd-fex)
-    #plt.semilogy(xeval,err_l,'ro--',label='lagrange')
-    #plt.semilogy(xeval,err_dd,'bs--',label='Newton DD')
-    #plt.legend()
-    #plt.show()
+    plt.figure() 
+    err_l = abs(yeval_l-fex)
+    err_dd = abs(yeval_dd-fex)
+    plt.semilogy(xeval,err_l,'ro--',label='lagrange')
+    plt.semilogy(xeval,err_dd,'bs--',label='Newton DD')
+    plt.legend()
+    plt.show()
 
 
 def eval_lagrange(xeval,xint,yint,N):

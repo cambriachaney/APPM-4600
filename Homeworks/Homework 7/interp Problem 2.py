@@ -8,7 +8,7 @@ def driver():
 
     f = lambda x: 1/(1+(10*x)**2)
 
-    N = 22
+    N = 5
     ''' interval'''
     a = -1
     b = 1
@@ -49,6 +49,8 @@ def driver():
        y[j][0]  = yint[j]
 
     y = dividedDiffTable(xint, y, N+1)
+
+    print("Y Table", y)
     ''' evaluate lagrange poly '''
     for kk in range(Neval+1):
        yeval_l[kk] = eval_lagrange(xeval[kk],xint,yint,N)
