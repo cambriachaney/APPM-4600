@@ -94,7 +94,7 @@ def scipy_LU(A,b):
 def QR_solve(A,b):
      Q,R = scila.qr(A)
      Qb = np.dot(Q.T,b)
-     x_qr = scila.solve(R, Qb)
+     x_qr = scila.lstsq(R, Qb)[0]
      test_qr = np.matmul(A, x_qr)
      r_qr = la.norm(test_qr - b)
      print("QR:", r_qr)
