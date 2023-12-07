@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 def driver():
 
-    x0 = [10,-20]
+    x0 = [6,-10]
     variables = ['a', 'b']
     Nmax = 100
     tol = 10**(-6)
@@ -25,8 +25,8 @@ def driver():
     
     ax.scatter3D(xvec, yvec, zvec, c = zvec, cmap = 'rainbow_r')
     
-    x = np.linspace(-50,50,100)
-    y = np.linspace(-50,50,100)
+    x = np.linspace(-10,10,100)
+    y = np.linspace(-10,10,100)
     X,Y = np.meshgrid(x,y)
     Z = function(X,Y)
     ax.plot_surface(X,Y,Z, alpha = 0.5,rstride =1, cstride =1, cmap = 'viridis', edgecolor = 'none')
@@ -37,7 +37,7 @@ def driver():
     plt.show()
 
 def function(x,y):
-    return 7.33*10**(-9)*(y*(x-36.536)**2) + 5*10**(-9)*(x*(y+0.00176)**2)
+    return (x-1)**2 + (y+3)**2
 
 def eval_hessian(x, variables):
 
@@ -48,7 +48,7 @@ def eval_hessian(x, variables):
 
     #### MUST CHANGE FUNCTION HERE TOO!!!!!
     
-    function = 7.33*10**(-9)*(b*(a-36.536)**2) + 5*10**(-9)*(a*(b+0.00176)**2)
+    function = (a-1)**2 + (b+3)**2
     
     matrix = np.zeros([M,M])
 
@@ -65,12 +65,12 @@ def eval_hessian(x, variables):
 
 def evalF(x):
 
-    F = 7.33*10**(-9)*(x[1]*(x[0]-36.536)**2) + 5*10**(-9)*(x[0]*(x[1]+0.00176)**2)
+    F = (x[0]-1)**2 + (x[1]+3)**2
     return F
 
 def eval_grad(x):
     F = evalF(x)
-    grad = np.array([7.33*10**(-9)*x[1]*2*(x[0]-36.536)+5*10**(-9)*(x[1]+0.00176)**2,7.33*10**(-9)*(x[0]-36.536)**2 + 5*10**(-9)*x[0]*2*(x[1]+0.00176)])
+    grad = np.array([2*(x[0]-1),2*(x[1]+3)])
     return grad
 
 def NewtonDescent(x0,tol,Nmax, variables):
